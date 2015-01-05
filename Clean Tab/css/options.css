@@ -1,0 +1,26 @@
+@font-face {
+  font-family: 'raleway';
+  src: url('../font/raleway_thin-webfont.eot');
+  src: url('../font/raleway_thin-webfont.eot') format('embedded-opentype'),
+       url('../font/raleway_thin-webfont.woff') format('woff'),
+       url('../font/raleway_thin-webfont.ttf') format('truetype'),
+       url('../font/raleway_thin-webfont.svg') format('svg');
+}
+
+body {
+	font-family: raleway,sans-serif;
+}
+
+label {
+	display: block;
+}
+
+#options {
+	width: 400px;
+	margin: auto;
+}
+
+#extraURLs {
+	width: 100%;
+	height: 100px;
+}

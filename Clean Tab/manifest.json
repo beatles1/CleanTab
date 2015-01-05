@@ -1,0 +1,18 @@
+{
+  "manifest_version": 2,
+
+  "name": "Clean Tab - New Tab Replacement",
+  "short_name": "Clean Tab",
+  "description": "New Tab page replacement with beautiful photography.",
+  "version": "0.12",
+
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "icons": {
+    "48": "icon48.png",
+  	"128": "icon128.png"
+  },
+  
+  "options_page": "options.html"
+}
