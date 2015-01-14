@@ -32,6 +32,10 @@ window.onload = function() {
 				useNotes = false;
 			}
 			
+			if (options["options"]) {
+				document.getElementById("options").style.display = "none";
+			}
+			
 			if (options["quote"]) {
 				document.getElementById("quote").style.display = "none";
 				useQuote = false;

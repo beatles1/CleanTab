@@ -93,6 +93,12 @@ body {
 	font-family: raleway,sans-serif;
 }
 
+#options {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+}
+
 #pad:empty:not(:focus):before{
     content:attr(data-text);
 	cursor: text;

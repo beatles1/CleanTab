@@ -1,4 +1,4 @@
-var avaliableOptions = ["apps", "clock", "search", "notes", "quote", "newQuote", "defaultBG"];
+var avaliableOptions = ["apps", "clock", "search", "notes", "quote", "newQuote", "options", "defaultBG"];
 
 window.onload = function() {
 	
