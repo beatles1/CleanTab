@@ -4,6 +4,8 @@ window.onload = function() {
 	var useNotes = true;
 	var useApps = true;
 	var useClock = true;
+	var useQuote = true;
+	var keepQuote = true;
 	
 	// Options
 	function applyOptions() {
@@ -26,8 +28,17 @@ window.onload = function() {
 			}
 			
 			if (options["notes"]) {
-				document.getElementById("padCon").style.display = "none";
+				document.getElementById("pad").style.display = "none";
 				useNotes = false;
+			}
+			
+			if (options["quote"]) {
+				document.getElementById("quote").style.display = "none";
+				useQuote = false;
+			}
+			
+			if (options["newQuote"]) {
+				keepQuote = false;
 			}
 			
 			if (options["defaultBG"]) {
@@ -109,21 +120,40 @@ window.onload = function() {
 		updateClock()
 		setInterval(updateClock, 500)
 	}
-}
-
-function convertImgToBase64(url, callback, outputFormat){
-    var canvas = document.createElement('CANVAS'),
-        ctx = canvas.getContext('2d'),
-        img = new Image;
-    img.crossOrigin = 'Anonymous';
-    img.onload = function(){
-        var dataURL;
-        canvas.height = img.height;
-        canvas.width = img.width;
-        ctx.drawImage(img, 0, 0);
-        dataURL = canvas.toDataURL(outputFormat);
-        callback.call(this, dataURL);
-        canvas = null; 
-    };
-    img.src = url;
+	
+	// Quotes
+	function displayQuote() {
+		var quote = localStorage.getItem("quote");
+		document.getElementById("quote").innerHTML = quote;
+	}
+	
+	if (useQuote) {
+		var d = new Date();
+		var quoteTime = localStorage.getItem("quoteTime");
+		if ((!keepQuote || (!quoteTime || quoteTime < d.getTime())) && window.navigator.onLine) {
+			var xmlhttp;
+			if (window.XMLHttpRequest){
+				xmlhttp=new XMLHttpRequest();
+			}
+			xmlhttp.onreadystatechange = function() {
+				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+					var data = xmlhttp.responseText;
+					
+					var quoteJSON = JSON.parse(data);
+					var quote = '"'+ quoteJSON["quote"] +'" - '+ quoteJSON["author"];
+					localStorage.setItem("quote", quote);
+					
+					displayQuote();
+					
+					d.setHours(24,0,0,0);
+					localStorage.setItem("quoteTime", d.getTime());
+				}
+			}
+			xmlhttp.open("GET","https://andruxnet-random-famous-quotes.p.mashape.com/cat=famous",true);
+			xmlhttp.setRequestHeader("X-Mashape-Key", "K0tj7GVDTJmshC0R86WSEtc9oMNUp1KOCL6jsnYrlynLRg7NqW");
+			xmlhttp.send();
+		} else {
+			displayQuote();
+		}
+	}
 }
