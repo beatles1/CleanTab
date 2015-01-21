@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
 
-  "name": "Clean Tab - New Tab Replacement",
+  "name": "Clean Tab - New Tab Page",
   "short_name": "Clean Tab",
   "description": "New Tab page replacement with beautiful photography.",
-  "version": "0.21",
+  "version": "0.22",
   "offline_enabled": true,
 
   "chrome_url_overrides": {
