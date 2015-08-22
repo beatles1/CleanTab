@@ -5,7 +5,7 @@ window.onload = function() {
 	var useApps = true;
 	var useClock = true;
 	var useQuote = true;
-	var keepQuote = true;
+	var quoteCat = "";
 	
 	// Options
 	function applyOptions() {
@@ -41,12 +41,15 @@ window.onload = function() {
 				useQuote = false;
 			}
 			
-			if (options["newQuote"]) {
-				keepQuote = false;
-			}
-			
 			if (options["defaultBG"]) {
 				useDefaultBGs = false;
+			}
+			
+			if (options["quoteCat"]) {
+				quoteCat = options["quoteCat"];
+				if (quoteCat == "all") {
+					quoteCat = "";
+				}
 			}
 		}
 	}
@@ -134,27 +137,33 @@ window.onload = function() {
 	if (useQuote) {
 		var d = new Date();
 		var quoteTime = localStorage.getItem("quoteTime");
-		if ((!keepQuote || (!quoteTime || quoteTime < d.getTime())) && window.navigator.onLine) {
+		if ((!quoteTime || quoteTime < d.getTime()) && window.navigator.onLine) {
 			var xmlhttp;
 			if (window.XMLHttpRequest){
 				xmlhttp=new XMLHttpRequest();
 			}
 			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+				if ((xmlhttp.readyState==4 && xmlhttp.status==200) || xmlhttp.status==429) {
+					console.log("get429");
 					var data = xmlhttp.responseText;
 					
 					var quoteJSON = JSON.parse(data);
-					var quote = '"'+ quoteJSON["quote"] +'" - '+ quoteJSON["author"];
-					localStorage.setItem("quote", quote);
-					
-					displayQuote();
-					
-					d.setHours(24,0,0,0);
-					localStorage.setItem("quoteTime", d.getTime());
+					if (typeof quoteJSON["error"] === 'undefined') {
+						
+						var quote = '"'+ quoteJSON["contents"]["quotes"][0]["quote"] +'" - '+ quoteJSON["contents"]["quotes"][0]["author"];
+						localStorage.setItem("quote", quote);
+						
+						displayQuote();
+						
+						d.setHours(24,0,0,0);
+						localStorage.setItem("quoteTime", d.getTime());
+					} else {
+						displayQuote();
+					}
 				}
 			}
-			xmlhttp.open("GET","https://andruxnet-random-famous-quotes.p.mashape.com/cat=famous",true);
-			xmlhttp.setRequestHeader("X-Mashape-Key", "K0tj7GVDTJmshC0R86WSEtc9oMNUp1KOCL6jsnYrlynLRg7NqW");
+			xmlhttp.open("GET","http://api.theysaidso.com/qod.json?category="+ quoteCat,true);
+			console.log("loading quote from"+ "http://api.theysaidso.com/qod.json?category="+ quoteCat);
 			xmlhttp.send();
 		} else {
 			displayQuote();

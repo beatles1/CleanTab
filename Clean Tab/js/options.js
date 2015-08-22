@@ -1,4 +1,4 @@
-var avaliableOptions = ["apps", "clock", "search", "notes", "quote", "newQuote", "options", "defaultBG"];
+var avaliableOptions = ["apps", "clock", "search", "notes", "quote", "options", "defaultBG"];
 
 window.onload = function() {
 	
@@ -39,6 +39,11 @@ window.onload = function() {
 			}
 		}
 		
+		var catElem = document.getElementById("quoteCat");
+		if (catElem) {
+			options["quoteCat"] = catElem.value;
+		}
+		
 		localStorage.setItem("options", JSON.stringify(options));
 		
 		var status = document.getElementById("statusDiv");
@@ -46,6 +51,8 @@ window.onload = function() {
 		setTimeout(function() {
 			status.textContent = "";
 		}, 1000);
+		
+		localStorage.setItem("quoteTime", 0);
 	}
 	
 	function loadOptions() {
@@ -53,16 +60,25 @@ window.onload = function() {
 		options = JSON.parse(localStorage.getItem("options"));
 		
 		for (var id in options) {
-			var val = options[id]
-			document.getElementById(id +"Opt").checked = val;
+			if (id != "quoteCat") {
+				var val = options[id]
+				document.getElementById(id +"Opt").checked = val;
+			}
 		}
 		
 		var urls = {};
 		urls = JSON.parse(localStorage.getItem("extraBGs"));
 		
-		var urlStr = urls.join(",");
+		if (urls) {
+			var urlStr = urls.join(",");
+			
+			document.getElementById("extraURLs").value = urlStr;
+		}
 		
-		document.getElementById("extraURLs").value = urlStr;
+		var catElem = document.getElementById("quoteCat");
+		if (catElem) {
+			catElem.value = options["quoteCat"];
+		}
 	}
 	
 	document.getElementById("saveBtn").onclick = saveOptions;
