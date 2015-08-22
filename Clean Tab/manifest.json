@@ -4,7 +4,7 @@
   "name": "Clean Tab - New Tab Page",
   "short_name": "Clean Tab",
   "description": "New Tab page replacement with beautiful photography.",
-  "version": "0.22",
+  "version": "0.30",
   "offline_enabled": true,
 
   "chrome_url_overrides": {
