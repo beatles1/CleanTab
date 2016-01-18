@@ -70,12 +70,18 @@ window.onload = function() {
 	var urls = {};
 	urls = JSON.parse(localStorage.getItem("extraBGs"));
 	if (urls) {
-		var bg = Math.floor((Math.random() * (localBGs + urls.length)) + 1);
-		if (!(useDefaultBGs) || (bg > localBGs)) {
-			bg = bg - localBGs - 1;
+		if (!(useDefaultBGs)) {
+			var bg = Math.floor((Math.random() * (urls.length)));
+			console.log(bg);
 			loadBG(urls[bg]);
 		} else {
-			loadBG(bg);
+			var bg = Math.floor((Math.random() * (localBGs + urls.length)) + 1);
+			if (bg > localBGs) {
+				bg = bg - localBGs - 1;
+				loadBG(urls[bg]);
+			} else {
+				loadBG(bg);
+			}
 		}
 	} else {
 		loadBG(Math.floor((Math.random() * localBGs) + 1));
