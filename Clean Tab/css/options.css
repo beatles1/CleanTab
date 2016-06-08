@@ -8,6 +8,8 @@
 }
 
 body {
+	background: url('../bg/1.jpg');
+	background-size: cover;
 	font-family: raleway,sans-serif;
 }
 
@@ -15,9 +17,22 @@ label {
 	display: block;
 }
 
+a {
+	color: #fff;
+}
+
 #options {
-	width: 400px;
+	width: 500px;
 	margin: auto;
+	
+	padding:6px 15px 6px 15px;
+	border-radius:20px;
+	-moz-border-radius:20px;
+	-webkit-border-radius:20px;
+	
+	border: 2px solid #cccccc;
+	background: rgba(0, 0, 0, 0.7);
+	color: #cccccc;
 }
 
 #extraURLs {
