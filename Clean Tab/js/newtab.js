@@ -44,13 +44,6 @@ window.onload = function() {
 			if (options["defaultBG"]) {
 				useDefaultBGs = false;
 			}
-			
-			if (options["quoteCat"]) {
-				quoteCat = options["quoteCat"];
-				if (quoteCat == "all") {
-					quoteCat = "";
-				}
-			}
 		}
 	}
 	applyOptions()
@@ -150,13 +143,15 @@ window.onload = function() {
 			}
 			xmlhttp.onreadystatechange = function() {
 				if ((xmlhttp.readyState==4 && xmlhttp.status==200) || xmlhttp.status==429) {
-					console.log("get429");
 					var data = xmlhttp.responseText;
 					
 					var quoteJSON = JSON.parse(data);
 					if (typeof quoteJSON["error"] === 'undefined') {
 						
-						var quote = '"'+ quoteJSON["contents"]["quotes"][0]["quote"] +'" - '+ quoteJSON["contents"]["quotes"][0]["author"];
+						var quote = '"'+ quoteJSON["quoteText"] +'"';
+						if (quoteJSON["quoteAuthor"] && quoteJSON["quoteAuthor"] != "") {
+							quote += ' - '+ quoteJSON["quoteAuthor"];
+						}
 						localStorage.setItem("quote", quote);
 						
 						displayQuote();
@@ -168,8 +163,8 @@ window.onload = function() {
 					}
 				}
 			}
-			xmlhttp.open("GET","http://api.theysaidso.com/qod.json?category="+ quoteCat,true);
-			console.log("loading quote from"+ "http://api.theysaidso.com/qod.json?category="+ quoteCat);
+			xmlhttp.open("GET","https://beatles1-forismatic-quotes-v1.p.mashape.com/?method=getQuote&format=json&lang=en", true);
+			xmlhttp.setRequestHeader("X-Mashape-Authorization", "K0tj7GVDTJmshC0R86WSEtc9oMNUp1KOCL6jsnYrlynLRg7NqW");
 			xmlhttp.send();
 		} else {
 			displayQuote();

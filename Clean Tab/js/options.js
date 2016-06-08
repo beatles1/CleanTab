@@ -39,11 +39,6 @@ window.onload = function() {
 			}
 		}
 		
-		var catElem = document.getElementById("quoteCat");
-		if (catElem) {
-			options["quoteCat"] = catElem.value;
-		}
-		
 		localStorage.setItem("options", JSON.stringify(options));
 		
 		var status = document.getElementById("statusDiv");
@@ -73,11 +68,6 @@ window.onload = function() {
 			var urlStr = urls.join(",");
 			
 			document.getElementById("extraURLs").value = urlStr;
-		}
-		
-		var catElem = document.getElementById("quoteCat");
-		if (catElem) {
-			catElem.value = options["quoteCat"];
 		}
 	}
 	
