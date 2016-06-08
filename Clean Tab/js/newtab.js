@@ -1,6 +1,7 @@
 window.onload = function() {
 	
 	var useDefaultBGs = true;
+	var useUnsplashBGs = true;
 	var useNotes = true;
 	var useApps = true;
 	var useClock = true;
@@ -44,12 +45,17 @@ window.onload = function() {
 			if (options["defaultBG"]) {
 				useDefaultBGs = false;
 			}
+			
+			if (options["unsplashBG"]) {
+				useUnsplashBGs = false;
+			}
 		}
 	}
 	applyOptions()
 	
 	//Random Background
 	var localBGs = 20;
+	
 	function loadBG(bg) {
 		if ((bg) && (typeof bg == "number")) {
 			document.body.style.background = "url('bg/"+ bg +".jpg')";
@@ -60,24 +66,22 @@ window.onload = function() {
 		}
 	}
 	
-	var urls = {};
-	urls = JSON.parse(localStorage.getItem("extraBGs"));
-	if (urls) {
-		if (!(useDefaultBGs)) {
-			var bg = Math.floor((Math.random() * (urls.length)));
-			console.log(bg);
-			loadBG(urls[bg]);
-		} else {
-			var bg = Math.floor((Math.random() * (localBGs + urls.length)) + 1);
-			if (bg > localBGs) {
-				bg = bg - localBGs - 1;
-				loadBG(urls[bg]);
-			} else {
-				loadBG(bg);
-			}
-		}
-	} else {
+	var extraBGs = {};
+	extraBGs = JSON.parse(localStorage.getItem("extraBGs"));
+	
+	var bgTypes = [];
+	if (useUnsplashBGs && window.navigator.onLine) {bgTypes.push("unsplash");}
+	if (useDefaultBGs) {bgTypes.push("default");}
+	if (extraBGs && extraBGs.length > 0 && window.navigator.onLine) {bgTypes.push("extra");}
+	var bgType = bgTypes[Math.floor(Math.random() * bgTypes.length)];
+	
+	if (bgType == "unsplash") {			// Load Unsplash Image
+		loadBG("https://source.unsplash.com/random/" + window.innerWidth + "x" + window.innerHeight);
+	} else if (bgType == "default") {	// Load Local Image
 		loadBG(Math.floor((Math.random() * localBGs) + 1));
+	} else if (bgType == "extra") {		// Load Manual Image
+		var bg = Math.floor((Math.random() * (extraBGs.length)));
+		loadBG(extraBGs[bg]);
 	}
 	
 	// Notes
@@ -136,13 +140,11 @@ window.onload = function() {
 	if (useQuote) {
 		var d = new Date();
 		var quoteTime = localStorage.getItem("quoteTime");
-		if ((!quoteTime || quoteTime < d.getTime()) && window.navigator.onLine) {
+		if ((!quoteTime || quoteTime < d.getTime()) && window.navigator.onLine && window.XMLHttpRequest) {
 			var xmlhttp;
-			if (window.XMLHttpRequest){
-				xmlhttp=new XMLHttpRequest();
-			}
+			xmlhttp=new XMLHttpRequest();
 			xmlhttp.onreadystatechange = function() {
-				if ((xmlhttp.readyState==4 && xmlhttp.status==200) || xmlhttp.status==429) {
+				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 					var data = xmlhttp.responseText;
 					
 					var quoteJSON = JSON.parse(data);
