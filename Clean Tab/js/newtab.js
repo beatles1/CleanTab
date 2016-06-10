@@ -149,38 +149,15 @@ window.onload = function() {
 	}
 	
 	if (useQuote) {
+		displayQuote();
 		var d = new Date();
 		var quoteTime = localStorage.getItem("quoteTime");
 		if ((!quoteTime || quoteTime < d.getTime()) && window.navigator.onLine && window.XMLHttpRequest) {
-			var xmlhttp;
-			xmlhttp=new XMLHttpRequest();
-			xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-					var data = xmlhttp.responseText;
-					
-					var quoteJSON = JSON.parse(data);
-					if (typeof quoteJSON["error"] === 'undefined') {
-						
-						var quote = '"'+ quoteJSON["quoteText"] +'"';
-						if (quoteJSON["quoteAuthor"] && quoteJSON["quoteAuthor"] != "") {
-							quote += ' - '+ quoteJSON["quoteAuthor"];
-						}
-						localStorage.setItem("quote", quote);
-						
-						displayQuote();
-						
-						d.setHours(24,0,0,0);
-						localStorage.setItem("quoteTime", d.getTime());
-					} else {
-						displayQuote();
-					}
-				}
-			}
-			xmlhttp.open("GET","https://beatles1-forismatic-quotes-v1.p.mashape.com/?method=getQuote&format=json&lang=en", true);
-			xmlhttp.setRequestHeader("X-Mashape-Authorization", "K0tj7GVDTJmshC0R86WSEtc9oMNUp1KOCL6jsnYrlynLRg7NqW");
-			xmlhttp.send();
-		} else {
-			displayQuote();
+			chrome.runtime.getBackgroundPage(function(bp) {
+				if (bp) {
+					bp.loadQuote();
+				};
+			});
 		}
 	}
 }
