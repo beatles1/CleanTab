@@ -1,4 +1,4 @@
-chrome.runtime.onInstalled.addListener(function(details){
+browser.runtime.onInstalled.addListener(function(details){
 	if(details.reason == "install"){
 		localStorage.setItem("quote", "Welcome to Clean Tab!");
 	}

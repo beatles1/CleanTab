@@ -1,25 +1,23 @@
 {
-  "manifest_version": 2,
-
-  "name": "Clean Tab - New Tab Page",
-  "short_name": "Clean Tab",
-  "description": "New Tab page replacement with beautiful photography.",
-  "version": "0.42",
-  "offline_enabled": true,
-
-  "chrome_url_overrides": {
-    "newtab": "newtab.html"
-  },
-  
-  "background": {
-    "scripts": ["js/eventpage.js"],
-    "persistent": false
-  },
-  
-  "icons": {
-    "48": "icon48.png",
-  	"128": "icon128.png"
-  },
-  
-  "options_page": "options.html"
+   "background": {
+      "persistent": false,
+      "scripts": [ "js/eventpage.js" ]
+   },
+   "chrome_url_overrides": {
+      "newtab": "newtab.html"
+   },
+   "description": "New Tab page replacement with beautiful photography.",
+   "icons": {
+      "128": "icon128.png",
+      "48": "icon48.png"
+   },
+   "options_ui": {
+      "page": "options.html"
+    },
+   "manifest_version": 2,
+   "name": "Clean Tab - New Tab Page",
+   "short_name": "Clean Tab",
+   "version": "0.43",
+   "author": "Edward Bowden",
+   "homepage_url": "https://edwardbowden.uk"
 }

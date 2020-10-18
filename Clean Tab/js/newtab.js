@@ -82,7 +82,7 @@ window.onload = function() {
 			loadBG("https://source.unsplash.com/random/" + window.innerWidth + "x" + window.innerHeight);
 		}
 		
-		chrome.runtime.getBackgroundPage(function(bp) {
+		browser.runtime.getBackgroundPage(function(bp) {
 			if (bp) {
 				bp.cacheUnsplash(window.innerWidth, window.innerHeight);
 			};
@@ -153,7 +153,7 @@ window.onload = function() {
 		var d = new Date();
 		var quoteTime = localStorage.getItem("quoteTime");
 		if ((!quoteTime || quoteTime < d.getTime()) && window.navigator.onLine && window.XMLHttpRequest) {
-			chrome.runtime.getBackgroundPage(function(bp) {
+			browser.runtime.getBackgroundPage(function(bp) {
 				if (bp) {
 					bp.loadQuote();
 				};
