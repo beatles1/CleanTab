@@ -101,12 +101,12 @@ window.onload = function() {
 		
 		function loadNotes() {
 			var notes = localStorage.getItem("notes");
-			noteDiv.innerHTML = notes;
+			noteDiv.textContent = notes;
 		}
 		loadNotes()
 		
 		function saveNotes() {
-			var notes = noteDiv.innerHTML;
+			var notes = noteDiv.textContent;
 			if ((notes == "<br>") || (notes == "<div><br></div>")) { notes = "" }
 			localStorage.setItem("notes", notes);
 		}
@@ -131,7 +131,7 @@ window.onload = function() {
 			var h = checkZero(t.getHours());
 			var m = checkZero(t.getMinutes());
 			
-			document.getElementById("clock").innerHTML = h +":"+ m;
+			document.getElementById("clock").textContent = h +":"+ m;
 		}
 		
 		function checkZero(i) {
@@ -145,7 +145,7 @@ window.onload = function() {
 	// Quotes
 	function displayQuote() {
 		var quote = localStorage.getItem("quote");
-		document.getElementById("quote").innerHTML = quote;
+		document.getElementById("quote").textContent = quote;
 	}
 	
 	if (useQuote) {
