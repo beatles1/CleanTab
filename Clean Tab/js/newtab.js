@@ -114,15 +114,6 @@ window.onload = function() {
 		
 	}
 	
-	// Apps link
-	if (useApps) {
-		document.getElementById("apps").addEventListener("click", function(){
-			chrome.tabs.update({
-				url:"chrome://apps"
-			});
-		});
-	}
-	
 	
 	// Clock
 	if (useClock) {
