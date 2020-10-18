@@ -41,8 +41,8 @@ function loadQuote() {
 			}
 		}
 	}
-	xmlhttp.open("GET","https://beatles1-forismatic-quotes-v1.p.mashape.com/?method=getQuote&format=json&lang=en", true);
-	xmlhttp.setRequestHeader("X-Mashape-Authorization", "K0tj7GVDTJmshC0R86WSEtc9oMNUp1KOCL6jsnYrlynLRg7NqW");
+	xmlhttp.open("GET","https://beatles1-forismatic-quotes-v1.p.rapidapi.com/?method=getQuote&format=json&lang=en", true);
+	xmlhttp.setRequestHeader("x-rapidapi-key", "K0tj7GVDTJmshC0R86WSEtc9oMNUp1KOCL6jsnYrlynLRg7NqW");
 	xmlhttp.send();
 }
 
