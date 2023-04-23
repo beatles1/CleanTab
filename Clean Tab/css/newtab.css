@@ -92,6 +92,11 @@ body {
 	font-family: raleway,sans-serif;
 }
 
+a {
+	color: inherit;
+    text-decoration: none;
+}
+
 #options {
 	position: absolute;
 	bottom: 0;

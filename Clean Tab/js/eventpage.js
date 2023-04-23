@@ -6,44 +6,43 @@ browser.runtime.onInstalled.addListener(function(details){
 
 function cacheUnsplash(w, h) {
 	if (window.navigator.onLine && window.XMLHttpRequest && w && h) {
-		var xmlhttp;
-		xmlhttp=new XMLHttpRequest();
-		xmlhttp.onreadystatechange = function() {
-			if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-				localStorage.setItem("unsplashCached", "data:image/jpeg;base64," + encode64(xmlhttp.responseText));
-			}
-		}
-		xmlhttp.open("GET","https://source.unsplash.com/random/" + w + "x" + h, true);
-		xmlhttp.overrideMimeType('text/plain; charset=x-user-defined');
-		xmlhttp.send();
-	}
-}
+		// Get Random photo from API
+		var xmlhttp1;
+		xmlhttp1=new XMLHttpRequest();
+		xmlhttp1.onreadystatechange = function() {
+			if (xmlhttp1.readyState==4 && xmlhttp1.status==200) {
+				var data = xmlhttp1.responseText;
+				var photoJSON = JSON.parse(data);
 
-function loadQuote() {
-	var d = new Date();
-	var xmlhttp;
-	xmlhttp=new XMLHttpRequest();
-	xmlhttp.onreadystatechange = function() {
-		if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-			var data = xmlhttp.responseText;
-			
-			var quoteJSON = JSON.parse(data);
-			if (typeof quoteJSON["error"] === 'undefined') {
-				
-				var quote = '"'+ quoteJSON["quoteText"] +'"';
-				if (quoteJSON["quoteAuthor"] && quoteJSON["quoteAuthor"] != "") {
-					quote += ' - '+ quoteJSON["quoteAuthor"];
+				// Cache photo
+				var photoURL = photoJSON["urls"]["raw"]
+				photoURL = photoURL + "&w=" + w
+
+				var xmlhttp;
+				xmlhttp=new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+						localStorage.setItem("unsplashCached", "data:image/jpeg;base64," + encode64(xmlhttp.responseText));
+
+						localStorage.setItem("unsplashUserName", photoJSON["user"]["name"]);
+						localStorage.setItem("unsplashUserURL", photoJSON["user"]["links"]["html"]);
+					}
 				}
-				localStorage.setItem("quote", quote);
-				
-				d.setHours(23,0,0,0);
-				localStorage.setItem("quoteTime", d.getTime());
+				xmlhttp.open("GET", photoURL, true);
+				xmlhttp.overrideMimeType('text/plain; charset=x-user-defined');
+				xmlhttp.send();
 			}
 		}
+		var o = "landscape"
+		if (Math.abs(w - h) <  (w*0.1)) {
+			o = "squarish"
+		} else if (h > w) {
+			o = "portrait"
+		}
+		xmlhttp1.open("GET","https://api.unsplash.com/photos/random/?client_id=FMW1rcXsHnhHmYehuiteTs2ZOsOcLvXiseaYvHIHpUs&orientation=" + o, true);
+		// xmlhttp1.overrideMimeType('text/plain; charset=x-user-defined');
+		xmlhttp1.send();
 	}
-	xmlhttp.open("GET","https://beatles1-forismatic-quotes-v1.p.rapidapi.com/?method=getQuote&format=json&lang=en", true);
-	xmlhttp.setRequestHeader("x-rapidapi-key", "K0tj7GVDTJmshC0R86WSEtc9oMNUp1KOCL6jsnYrlynLRg7NqW");
-	xmlhttp.send();
 }
 
 function encode64(inputStr) 

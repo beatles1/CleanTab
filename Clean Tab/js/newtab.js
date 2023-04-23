@@ -69,11 +69,9 @@ window.onload = function() {
 	var extraBGs = {};
 	extraBGs = JSON.parse(localStorage.getItem("extraBGs"));
 	
-	var bgTypes = [];
-	if (useUnsplashBGs && window.navigator.onLine && window.XMLHttpRequest) {bgTypes.push("unsplash");}
-	if (useDefaultBGs || !window.navigator.onLine) {bgTypes.push("default");}
-	if (extraBGs && extraBGs.length > 0 && window.navigator.onLine) {bgTypes.push("extra");}
-	var bgType = bgTypes[Math.floor(Math.random() * bgTypes.length)];
+	if (useUnsplashBGs && window.navigator.onLine && window.XMLHttpRequest) {bgType = "unsplash";}
+	else if (extraBGs && extraBGs.length > 0 && window.navigator.onLine) {bgType = "extra";}
+	else {bgType = "default";}
 	
 	if (bgType == "unsplash") {			// Load Unsplash Image
 		if (localStorage.getItem("unsplashCached")) {
@@ -90,9 +88,11 @@ window.onload = function() {
 		
 	} else if (bgType == "default") {	// Load Local Image
 		loadBG(Math.floor((Math.random() * localBGs) + 1));
+		useQuote = false;
 	} else if (bgType == "extra") {		// Load Manual Image
 		var bg = Math.floor((Math.random() * (extraBGs.length)));
 		loadBG(extraBGs[bg]);
+		useQuote = false;
 	}
 	
 	// Notes
@@ -135,20 +135,13 @@ window.onload = function() {
 	
 	// Quotes
 	function displayQuote() {
-		var quote = localStorage.getItem("quote");
-		document.getElementById("quote").textContent = quote;
+		document.getElementById("unsplashLink").textContent = localStorage.getItem("unsplashUserName");
+		document.getElementById("unsplashLink").href = localStorage.getItem("unsplashUserURL");
 	}
 	
 	if (useQuote) {
 		displayQuote();
-		var d = new Date();
-		var quoteTime = localStorage.getItem("quoteTime");
-		if ((!quoteTime || quoteTime < d.getTime()) && window.navigator.onLine && window.XMLHttpRequest) {
-			browser.runtime.getBackgroundPage(function(bp) {
-				if (bp) {
-					bp.loadQuote();
-				};
-			});
-		}
+	} else {
+		document.getElementById("quote").style.display = "none";
 	}
 }
