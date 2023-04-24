@@ -1,9 +1,3 @@
-browser.runtime.onInstalled.addListener(function(details){
-	if(details.reason == "install"){
-		localStorage.setItem("quote", "Welcome to Clean Tab!");
-	}
-});
-
 function cacheUnsplash(w, h) {
 	if (window.navigator.onLine && window.XMLHttpRequest && w && h) {
 		// Get Random photo from API
