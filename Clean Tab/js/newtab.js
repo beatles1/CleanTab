@@ -136,7 +136,7 @@ window.onload = function() {
 	// Quotes
 	function displayQuote() {
 		document.getElementById("unsplashLink").textContent = localStorage.getItem("unsplashUserName");
-		document.getElementById("unsplashLink").href = localStorage.getItem("unsplashUserURL");
+		document.getElementById("unsplashLink").href = localStorage.getItem("unsplashUserURL") + "?utm_source=CleanTab&utm_medium=referral";
 	}
 	
 	if (useQuote) {
