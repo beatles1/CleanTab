@@ -1,4 +1,4 @@
-var avaliableOptions = ["clock", "search", "notes", "quote", "options", "defaultBG", "unsplashBG"];
+var avaliableOptions = ["clock", "search", "notes", "attr", "options", "defaultBG", "unsplashBG"];
 
 window.onload = function() {
 	
@@ -46,8 +46,6 @@ window.onload = function() {
 		setTimeout(function() {
 			status.textContent = "";
 		}, 1000);
-		
-		localStorage.setItem("quoteTime", 0);
 	}
 	
 	function loadOptions() {
@@ -55,10 +53,8 @@ window.onload = function() {
 		options = JSON.parse(localStorage.getItem("options"));
 		
 		for (var id in options) {
-			if (id != "quoteCat") {
-				var val = options[id]
-				document.getElementById(id +"Opt").checked = val;
-			}
+			var val = options[id]
+			document.getElementById(id +"Opt").checked = val;
 		}
 		
 		var urls = {};

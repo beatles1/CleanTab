@@ -5,8 +5,7 @@ window.onload = function() {
 	var useNotes = true;
 	var useApps = true;
 	var useClock = true;
-	var useQuote = true;
-	var quoteCat = "";
+	var useAttr = true;
 	
 	// Options
 	function applyOptions() {
@@ -37,9 +36,9 @@ window.onload = function() {
 				document.getElementById("options").style.display = "none";
 			}
 			
-			if (options["quote"]) {
-				document.getElementById("quote").style.display = "none";
-				useQuote = false;
+			if (options["attr"]) {
+				document.getElementById("attr").style.display = "none";
+				useAttr = false;
 			}
 			
 			if (options["defaultBG"]) {
@@ -88,11 +87,11 @@ window.onload = function() {
 		
 	} else if (bgType == "default") {	// Load Local Image
 		loadBG(Math.floor((Math.random() * localBGs) + 1));
-		useQuote = false;
+		useAttr = false;
 	} else if (bgType == "extra") {		// Load Manual Image
 		var bg = Math.floor((Math.random() * (extraBGs.length)));
 		loadBG(extraBGs[bg]);
-		useQuote = false;
+		useAttr = false;
 	}
 	
 	// Notes
@@ -133,15 +132,15 @@ window.onload = function() {
 		setInterval(updateClock, 500)
 	}
 	
-	// Quotes
-	function displayQuote() {
+	// Unsplash Attribution
+	function displayAttr() {
 		document.getElementById("unsplashLink").textContent = localStorage.getItem("unsplashUserName");
 		document.getElementById("unsplashLink").href = localStorage.getItem("unsplashUserURL") + "?utm_source=CleanTab&utm_medium=referral";
 	}
 	
-	if (useQuote) {
-		displayQuote();
+	if (useAttr) {
+		displayAttr();
 	} else {
-		document.getElementById("quote").style.display = "none";
+		document.getElementById("attr").style.display = "none";
 	}
 }
