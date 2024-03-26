@@ -15,5 +15,10 @@
    "short_name": "Clean Tab",
    "version": "0.54",
    "author": "Edward Bowden",
-   "homepage_url": "https://edwardbowden.uk"
+   "homepage_url": "https://edwardbowden.uk",
+   "browser_specific_settings": {
+      "gecko": {
+        "id": "{a9220c69-a9b2-4e6b-8bb7-1ce519f7c983}"
+      }
+   }
 }
