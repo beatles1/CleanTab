@@ -1,8 +1,4 @@
 {
-   "background": {
-      "persistent": false,
-      "scripts": [ "js/eventpage.js" ]
-   },
    "chrome_url_overrides": {
       "newtab": "newtab.html"
    },
@@ -14,10 +10,10 @@
    "options_ui": {
       "page": "options.html"
     },
-   "manifest_version": 2,
+   "manifest_version": 3,
    "name": "Clean Tab - New Tab Page",
    "short_name": "Clean Tab",
-   "version": "0.53",
+   "version": "0.54",
    "author": "Edward Bowden",
    "homepage_url": "https://edwardbowden.uk"
 }
